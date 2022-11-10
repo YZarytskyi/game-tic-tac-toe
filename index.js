@@ -2,6 +2,8 @@ const contentRef = document.querySelector(".content");
 const resetBtnRef = document.querySelector(".btn-cross");
 const formRef = document.querySelector(".user-form");
 const gameContainerRef = document.querySelector(".container");
+const firstPlayerRef = document.getElementsByClassName("first-player");
+const secondPlayerRef = document.getElementsByClassName("second-player");
 
 const player1 = {
   symbol: "X",
@@ -40,15 +42,19 @@ if (player1.moves.length) {
   formRef.classList.add("hidden");
   resetBtnRef.classList.remove("hidden");
 
-  [player1.name, player2.name] = JSON.parse(localStorage.getItem("playersName"))
+  [player1.name, player2.name] = JSON.parse(
+    localStorage.getItem("playersName")
+  );
 
   contentRef.insertAdjacentHTML(
     "beforebegin",
     createPlayersMarkup(player1.name, player2.name)
   );
 
-  if (localStorage.getItem('currentPlayerSymbol') === player2.symbol) {
-    currentPlayerSymbol = player2.symbol
+  if (localStorage.getItem("currentPlayerSymbol") === player2.symbol) {
+    currentPlayerSymbol = player2.symbol;
+    firstPlayerRef[0].classList.toggle("active");
+    secondPlayerRef[0].classList.toggle("active");
   }
 
   const children = [...contentRef.children];
@@ -70,9 +76,9 @@ function onContentClick(e) {
   const position = e.target.dataset.id;
 
   if (currentPlayerSymbol === player1.symbol) {
-    playerMove(player1.moves, player1.name, player1.symbol, position)
+    playerMove(player1.moves, player1.name, player1.symbol, position);
   } else {
-    playerMove(player2.moves, player2.name, player2.symbol, position)
+    playerMove(player2.moves, player2.name, player2.symbol, position);
   }
   firstPlayerRef[0].classList.toggle("active");
   secondPlayerRef[0].classList.toggle("active");
@@ -90,12 +96,13 @@ function playerMove(playerMoves, playerName, playerSymbol, position) {
       return;
     }
     if (isDraw) {
-      alert('Draw!');
+      alert("Draw!");
       onResetBtnClick();
       return;
     }
   });
-  currentPlayerSymbol = currentPlayerSymbol === player1.symbol ? player2.symbol : player1.symbol;
+  currentPlayerSymbol =
+    currentPlayerSymbol === player1.symbol ? player2.symbol : player1.symbol;
   localStorage.setItem("currentPlayerSymbol", currentPlayerSymbol);
 }
 
@@ -106,10 +113,12 @@ function isWinner(playerMoves) {
 function onResetBtnClick() {
   contentRef.innerHTML = markup;
   currentPlayerSymbol = player1.symbol;
+  firstPlayerRef[0].classList.add("active");
+  secondPlayerRef[0].classList.remove("active");
   player1.moves = [];
   player2.moves = [];
-  localStorage.removeItem(player1.symbol)
-  localStorage.removeItem(player2.symbol)
+  localStorage.removeItem(player1.symbol);
+  localStorage.removeItem(player2.symbol);
 }
 
 function onFormSubmit(e) {
@@ -123,7 +132,10 @@ function onFormSubmit(e) {
     createPlayersMarkup(player1.name, player2.name)
   );
 
-  localStorage.setItem("playersName", JSON.stringify([player1.name, player2.name]));
+  localStorage.setItem(
+    "playersName",
+    JSON.stringify([player1.name, player2.name])
+  );
 
   e.currentTarget.classList.add("hidden");
   gameContainerRef.classList.remove("hidden");
@@ -136,6 +148,3 @@ function createPlayersMarkup(player1Name, player2Name) {
       <p class="second-player">${player2Name}</p>
     </div>`;
 }
-
-const firstPlayerRef = document.getElementsByClassName("first-player");
-const secondPlayerRef = document.getElementsByClassName("second-player");

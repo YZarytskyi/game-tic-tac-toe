@@ -1,16 +1,77 @@
+body {
+  background-color: rgb(255, 202, 202);
+}
+
+input {
+  padding: 0.6rem 0.8rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 1rem;
+  letter-spacing: 0.05em;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0px 15px 10px -15px blue;
+}
+
+input::placeholder {
+  font-size: 1rem;
+}
+
+label {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+button {
+  padding: 0.6rem 1.5rem;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 1.5rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+button:hover, button:focus {
+  background-color: rgb(87, 87, 255);
+}
+
+button:active {
+  background-color: blue;
+}
+
+.main-container {
+  height: 90vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .content {
-  width: 156px;
+  width: 216px;
   border: 1px solid black;
   margin: 0 auto;
 }
 
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
 .item {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
   text-align: center;
   display: inline-block;
-  font-size: 25px;
+  font-size: 35px;
   border: 1px solid black;
   cursor: pointer;
   vertical-align: middle;
@@ -26,9 +87,26 @@
 }
 
 .first-player, .second-player {
-  color: red;
+  position: relative;
+  font-size: 1.5rem;
+  text-align: center;
+  box-shadow: 0px 10px 8px -10px red;
 }
 
 .active {
-  color: green;
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 10px 8px -10px green;
+}
+
+
+.active::before {
+  position: absolute;
+  top: 0%;
+  left: -5%;
+  content: "\276F";
+  font-weight: 600;
+  font-size: 1.2rem;
 }

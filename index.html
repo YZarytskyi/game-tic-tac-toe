@@ -8,22 +8,29 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <button class="btn-cross hidden" type="button">Restart</button>
-    <div class="container hidden">
-      <div class="content"></div>
-    </div>
-    <div class="user-data">
-      <form class="user-form">
-        <label>
-          <span>Player 1</span>
-          <input type="text" name="player-1" />
-        </label>
-        <label>
-          <span>Player 2</span>
-          <input type="text" name="player-2"
-        /></label>
-        <button type="submit">submit</button>
-      </form>
+    <div class="main-container">
+      <button class="btn-cross hidden" type="button">Restart</button>
+      <div class="container hidden">
+        <div class="content"></div>
+      </div>
+      <div class="user-data">
+        <form class="user-form">
+          <label>
+            <span>Player 1</span>
+            <input
+              type="text"
+              name="player-1"
+              placeholder="Enter your name..."
+              required
+            />
+          </label>
+          <label>
+            <span>Player 2</span>
+            <input type="text" name="player-2" placeholder="Enter your name..." required
+          /></label>
+          <button type="submit">Start</button>
+        </form>
+      </div>
     </div>
     <script src="./index.js"></script>
   </body>
