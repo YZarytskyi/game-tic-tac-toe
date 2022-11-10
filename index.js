@@ -1,14 +1,18 @@
 const contentRef = document.querySelector(".content");
+const backBtnRef = document.querySelector(".btn-back");
 const resetBtnRef = document.querySelector(".btn-cross");
 const formRef = document.querySelector(".user-form");
 const gameContainerRef = document.querySelector(".container");
+const playersContainerRef = document.getElementsByClassName("players-container");
 const firstPlayerRef = document.getElementsByClassName("first-player");
 const secondPlayerRef = document.getElementsByClassName("second-player");
 
 const player1 = {
   symbol: "X",
+  moves: [],
 };
 const player2 = {
+  moves: [],
   symbol: "O",
 };
 let currentPlayerSymbol = player1.symbol;
@@ -28,28 +32,30 @@ const WINNER = [
 contentRef.addEventListener("click", onContentClick);
 formRef.addEventListener("submit", onFormSubmit);
 resetBtnRef.addEventListener("click", onResetBtnClick);
+backBtnRef.addEventListener("click", onBackBtnClick);
 
 for (let i = 1; i <= 9; i += 1) {
   markup += `<div class="item" data-id="${i}"></div>`;
 }
 contentRef.insertAdjacentHTML("beforeend", markup);
 
-player1.moves = JSON.parse(localStorage.getItem(player1.symbol)) || [];
-player2.moves = JSON.parse(localStorage.getItem(player2.symbol)) || [];
+if (JSON.parse(localStorage.getItem("playersName"))) {
+  [player1.name, player2.name] = JSON.parse(localStorage.getItem("playersName"));
+}
 
-if (player1.moves.length) {
+if (player1.name) {
   gameContainerRef.classList.remove("hidden");
   formRef.classList.add("hidden");
   resetBtnRef.classList.remove("hidden");
-
-  [player1.name, player2.name] = JSON.parse(
-    localStorage.getItem("playersName")
-  );
+  backBtnRef.classList.remove("hidden");
 
   contentRef.insertAdjacentHTML(
     "beforebegin",
     createPlayersMarkup(player1.name, player2.name)
   );
+
+  player1.moves = JSON.parse(localStorage.getItem(player1.symbol)) || [];
+  player2.moves = JSON.parse(localStorage.getItem(player2.symbol)) || [];
 
   if (localStorage.getItem("currentPlayerSymbol") === player2.symbol) {
     currentPlayerSymbol = player2.symbol;
@@ -110,6 +116,16 @@ function isWinner(playerMoves) {
   return WINNER.some((el) => el.every((item) => playerMoves.includes(item)));
 }
 
+function onBackBtnClick() {
+  onResetBtnClick();
+  gameContainerRef.removeChild(playersContainerRef[0])
+  localStorage.removeItem('playersName');
+  gameContainerRef.classList.add("hidden");
+  formRef.classList.remove("hidden");
+  resetBtnRef.classList.add("hidden");
+  backBtnRef.classList.add("hidden");
+}
+
 function onResetBtnClick() {
   contentRef.innerHTML = markup;
   currentPlayerSymbol = player1.symbol;
@@ -117,6 +133,7 @@ function onResetBtnClick() {
   secondPlayerRef[0].classList.remove("active");
   player1.moves = [];
   player2.moves = [];
+  localStorage.removeItem("currentPlayerSymbol")
   localStorage.removeItem(player1.symbol);
   localStorage.removeItem(player2.symbol);
 }
@@ -126,6 +143,9 @@ function onFormSubmit(e) {
 
   player1.name = e.currentTarget.elements[0].value;
   player2.name = e.currentTarget.elements[1].value;
+
+  e.currentTarget.elements[0].value = "";
+  e.currentTarget.elements[1].value = "";
 
   contentRef.insertAdjacentHTML(
     "beforebegin",
@@ -139,11 +159,12 @@ function onFormSubmit(e) {
 
   e.currentTarget.classList.add("hidden");
   gameContainerRef.classList.remove("hidden");
+  backBtnRef.classList.remove("hidden");
   resetBtnRef.classList.remove("hidden");
 }
 
 function createPlayersMarkup(player1Name, player2Name) {
-  return `<div>
+  return `<div class="players-container">
       <p class="first-player active">${player1Name}</p>
       <p class="second-player">${player2Name}</p>
     </div>`;

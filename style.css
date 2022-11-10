@@ -1,5 +1,6 @@
 body {
-  background-color: rgb(255, 202, 202);
+  margin: 0;
+  background-color: rgb(167, 216, 248);
 }
 
 input {
@@ -12,7 +13,7 @@ input {
 
 input:focus {
   outline: none;
-  box-shadow: 0px 15px 10px -15px blue;
+  box-shadow: 0 0 6px 0px rgb(0, 60, 255);
 }
 
 input::placeholder {
@@ -23,7 +24,7 @@ label {
   display: flex;
   gap: 1rem;
   align-items: center;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
 }
 
 button {
@@ -45,11 +46,11 @@ button:active {
 }
 
 .main-container {
-  height: 90vh;
-  padding: 1rem;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1rem;
   justify-content: center;
 }
 
@@ -57,6 +58,15 @@ button:active {
   width: 216px;
   border: 1px solid black;
   margin: 0 auto;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-back {
+  background-color: rgb(255, 40, 40);
 }
 
 .user-form {
