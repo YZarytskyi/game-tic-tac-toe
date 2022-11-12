@@ -3,7 +3,8 @@ const backBtnRef = document.querySelector(".btn-back");
 const resetBtnRef = document.querySelector(".btn-cross");
 const formRef = document.querySelector(".user-form");
 const gameContainerRef = document.querySelector(".container");
-const playersContainerRef = document.getElementsByClassName("players-container");
+const playersContainerRef =
+  document.getElementsByClassName("players-container");
 const firstPlayerRef = document.getElementsByClassName("first-player");
 const secondPlayerRef = document.getElementsByClassName("second-player");
 
@@ -40,15 +41,13 @@ for (let i = 1; i <= 9; i += 1) {
 contentRef.insertAdjacentHTML("beforeend", markup);
 
 if (JSON.parse(localStorage.getItem("playersName"))) {
-  [player1.name, player2.name] = JSON.parse(localStorage.getItem("playersName"));
+  [player1.name, player2.name] = JSON.parse(
+    localStorage.getItem("playersName")
+  );
 }
 
 if (player1.name) {
-  gameContainerRef.classList.remove("hidden");
-  formRef.classList.add("hidden");
-  resetBtnRef.classList.remove("hidden");
-  backBtnRef.classList.remove("hidden");
-
+  toggleClassListHidden();
   contentRef.insertAdjacentHTML(
     "beforebegin",
     createPlayersMarkup(player1.name, player2.name)
@@ -74,7 +73,7 @@ if (player1.name) {
 }
 
 function onContentClick(e) {
-  if (e.target.textContent) {
+  if (e.target.textContent || e.target === e.currentTarget) {
     return;
   }
 
@@ -106,7 +105,7 @@ function playerMove(playerMoves, playerName, playerSymbol, position) {
       onResetBtnClick();
       return;
     }
-  });
+  }, 100);
   currentPlayerSymbol =
     currentPlayerSymbol === player1.symbol ? player2.symbol : player1.symbol;
   localStorage.setItem("currentPlayerSymbol", currentPlayerSymbol);
@@ -118,12 +117,13 @@ function isWinner(playerMoves) {
 
 function onBackBtnClick() {
   onResetBtnClick();
-  gameContainerRef.removeChild(playersContainerRef[0])
-  localStorage.removeItem('playersName');
-  gameContainerRef.classList.add("hidden");
-  formRef.classList.remove("hidden");
-  resetBtnRef.classList.add("hidden");
-  backBtnRef.classList.add("hidden");
+  gameContainerRef.removeChild(playersContainerRef[0]);
+  localStorage.removeItem("playersName");
+
+  gameContainerRef.classList.toggle("hidden");
+  formRef.classList.toggle("hidden");
+  resetBtnRef.classList.toggle("hidden");
+  backBtnRef.classList.toggle("hidden");
 }
 
 function onResetBtnClick() {
@@ -133,7 +133,7 @@ function onResetBtnClick() {
   secondPlayerRef[0].classList.remove("active");
   player1.moves = [];
   player2.moves = [];
-  localStorage.removeItem("currentPlayerSymbol")
+  localStorage.removeItem("currentPlayerSymbol");
   localStorage.removeItem(player1.symbol);
   localStorage.removeItem(player2.symbol);
 }
@@ -157,10 +157,14 @@ function onFormSubmit(e) {
     JSON.stringify([player1.name, player2.name])
   );
 
-  e.currentTarget.classList.add("hidden");
-  gameContainerRef.classList.remove("hidden");
-  backBtnRef.classList.remove("hidden");
-  resetBtnRef.classList.remove("hidden");
+  toggleClassListHidden();
+}
+
+function toggleClassListHidden() {
+  formRef.classList.toggle("hidden");
+  gameContainerRef.classList.toggle("hidden");
+  backBtnRef.classList.toggle("hidden");
+  resetBtnRef.classList.toggle("hidden");
 }
 
 function createPlayersMarkup(player1Name, player2Name) {
