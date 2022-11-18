@@ -15,7 +15,4 @@ function toggleDark() {
   document.body.classList.toggle('dark');
   themeContainerRef.classList.toggle('dark-toggler-container');
   themeContainerRef.lastElementChild.classList.toggle('dark-toggler');
-  [...contentRef.children].forEach(el => {
-    el.classList.toggle('item-dark')
-  })
 }
