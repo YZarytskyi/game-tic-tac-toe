@@ -76,7 +76,7 @@ button:active {
   display: inline-block;
   font-size: 40px;
   border-radius: 20px;
-  box-shadow: 4px 4px 7px #5c5c5c, -4px -4px 7px #636363;
+  box-shadow: 0px 0px 2px #5c5c5c, 0px 0px 2px #636363;
   border: 1px solid rgb(158, 158, 158);
   cursor: pointer;
 }
@@ -175,5 +175,5 @@ button:active {
 
 .dark-toggler {
   background-color: #e0e0e0;
-  transform: translate(108%, -50%);
+  transform: translate(105%, -50%);
 }
